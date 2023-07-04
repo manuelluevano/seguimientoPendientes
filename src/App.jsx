@@ -3,7 +3,7 @@ import Formulario from "./components/Formulario";
 import Header from "./components/Header";
 import ListaTareas from "./components/ListaTareas";
 import { Amplify } from "aws-amplify";
-import awsconfig from "./aws-exports";
+import awsconfig from "../src/aws-exports";
 import { API, graphqlOperation } from "aws-amplify";
 import { listServicios } from "./graphql/queries";
 
