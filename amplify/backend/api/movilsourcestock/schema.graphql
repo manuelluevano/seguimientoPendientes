@@ -11,6 +11,6 @@ type Servicios @model {
   telefono: String!
   precio: Int!
   fecha: String!
-  folio: Int!
+  folio: String!
   status: Boolean!
 }

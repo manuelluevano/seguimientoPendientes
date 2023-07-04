@@ -13,6 +13,7 @@ function App() {
   const [pendienteObj, setPendienteObj] = useState([]);
   const [pendienteEdit, setPendienteEdit] = useState({});
   const [reload, setReload] = useState(false);
+  const [MxDolar, setMxDolar] = useState();
 
   // const eliminarPendientes = (pendienteDelete) => {
   //   console.log("Eliminar", pendienteDelete);
@@ -28,23 +29,55 @@ function App() {
   //OBTENER LOS SERVICIOS DE LA DB
   useEffect(() => {
     (async () => {
+      //Dolar
+      precioDolar();
+
       const { data } = await API.graphql(graphqlOperation(listServicios));
 
       setPendienteObj(data.listServicios.items);
 
-      console.log(data.listServicios.items);
-      console.log("RELOAD");
+      // console.log(data.listServicios.items);
+      // console.log("RELOAD");
       setReload(false);
     })();
   }, [reload]);
+
+  //OBTENER PRECIO DOLAR
+  // const fetchData = async () => {
+  //   const response = await fetch(
+  //     "https://api.exchangerate.host/latest?base=USD&symbols=MXN"
+  //   );
+  //   if (!response.ok) {
+  //     throw new Error("Data coud not be fetched!");
+  //   } else {
+  //     return response.json();
+  //   }
+  // };
+  // setMxDolar(fetchData);
+  // console.log("Peso vs dolar", MxDolar);
+
+  const precioDolar = async () => {
+    var requestOptions = {
+      method: "GET",
+      redirect: "follow",
+    };
+
+    fetch(
+      "https://api.exchangerate.host/latest?base=USD&symbols=MXN",
+      requestOptions
+    )
+      .then((response) => response.json())
+      // .then((result) => console.log(result))
+      .then((result) => setMxDolar(result))
+      .catch((error) => console.log("error", error));
+  };
 
   console.log("OBJETO CREADO", pendienteObj);
 
   return (
     <>
+      <Header MxDolar={MxDolar} />
       <div className="container mx-auto">
-        <Header />
-
         <div className="mt-12 md:flex">
           <Formulario
             setPendienteObj={setPendienteObj}

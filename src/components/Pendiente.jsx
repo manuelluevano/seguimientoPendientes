@@ -1,5 +1,6 @@
 import { API, graphqlOperation } from "aws-amplify";
 import { updateServicios } from "../graphql/mutations";
+import toTitleCase from "../helpers/index";
 
 const Pendiente = ({ item, setPendienteEdit, setPendienteObj, setReload }) => {
   const {
@@ -91,16 +92,21 @@ const Pendiente = ({ item, setPendienteEdit, setPendienteObj, setReload }) => {
   return (
     <div className="m-3 bg-white shadow-md px-5 py-10 rounded-xl">
       <p className="font-bold mb-3 text-gray-700 uppercase">
-        Pendiente: {""}
-        <span className="font-normal normal-case">{servicio}</span>
+        Modelo / Marca: {""}
+        <span className="font-normal normal-case">
+          {toTitleCase(modeloMarca)}
+        </span>
       </p>
       <p className="font-bold mb-3 text-gray-700 uppercase">
-        Modelo / Marca: {""}
-        <span className="font-normal normal-case">{modeloMarca}</span>
+        Servicio: {""}
+        <span className="font-normal normal-case">{toTitleCase(servicio)}</span>
       </p>
+
       <p className="font-bold mb-3 text-gray-700 uppercase">
         Nombre Cliente: {""}
-        <span className="font-normal normal-case">{nombreCliente}</span>
+        <span className="font-normal normal-case">
+          {toTitleCase(nombreCliente)}
+        </span>
       </p>
       <p className="font-bold mb-3 text-gray-700 uppercase">
         Telefono: {""}
@@ -111,7 +117,7 @@ const Pendiente = ({ item, setPendienteEdit, setPendienteObj, setReload }) => {
         <span className="font-normal normal-case">{precio}</span>
       </p>
       <p className="font-bold mb-3 text-gray-700 uppercase">
-        Nota: {""}
+        Folio: {""}
         <span className="font-normal normal-case">{folio}</span>
       </p>
       <p className="font-bold mb-3 text-gray-700 uppercase">
@@ -122,7 +128,7 @@ const Pendiente = ({ item, setPendienteEdit, setPendienteObj, setReload }) => {
         <p className="font-bold  text-gray-700 uppercase">Estado: </p>
         <p className="font-bold  text-gray-700 uppercase">
           {status ? (
-            <h1 className="text-green-700  normal-case ml-2 ">
+            <h1 className="text-lime-700  normal-case ml-2 ">
               Entregado correctamente
             </h1>
           ) : (
@@ -147,12 +153,16 @@ const Pendiente = ({ item, setPendienteEdit, setPendienteObj, setReload }) => {
           type="button"
           className={
             item.status
-              ? "py-2 px-10 bg-green-400 hover:bg-green-500 text-white font-bold uppercase rounded-lg"
+              ? ""
               : "py-2 px-10 bg-red-600 hover:bg-red-700 text-white font-bold uppercase rounded-lg"
           }
           onClick={() => handleUpdate(item)}
         >
-          {item.status ? "✔️" : "Terminado"}
+          {item.status ? (
+            <p className="text-red-500 text-3xl">✔️</p>
+          ) : (
+            "Terminado"
+          )}
         </button>
       </div>
     </div>
